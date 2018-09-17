@@ -1,4 +1,4 @@
-
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -7,6 +7,14 @@ typedef struct{
   double x, y, z;
 
 }point_t;
+
+double norm(point_t p){
+
+  double normp = sqrt(p.x*p.x+p.y*p.y+p.z*p.z);
+
+  return normp;
+  
+}
 
 int main(){
 
@@ -35,6 +43,15 @@ int main(){
   // when we are done with the array we should free it
   free(pt_v);
   pt_v = NULL;
+
+  point_t p;
+  p.x = 3;
+  p.y = 4;
+  p.z = 5;
+
+  double normp = norm(p);
+
+  printf("normp = %lg\n", normp);
   
   return 0;
 
