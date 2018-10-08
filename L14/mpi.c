@@ -6,7 +6,7 @@
 int main(int argc, char **argv){
 
   long long int Ninside = 0; // number of random points inside 1/4 circle
-  long long int Ntests = 1000000000;
+  long long int Ntests = 100000000;
   long long int n;
   int rank, size;
 
@@ -16,6 +16,8 @@ int main(int argc, char **argv){
   
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+  Ntests = Ntests/size;
   
   srand48(rank);
   
@@ -30,6 +32,8 @@ int main(int argc, char **argv){
       ++Ninside;
     }
   }
+
+  double toc = MPI_Wtime();
 
 
   {
@@ -52,11 +56,10 @@ int main(int argc, char **argv){
     }
   }
 
-  double toc = MPI_Wtime();
   
   if(rank==0){
-    printf("estPi = %17.15lf\n", estpi);
-    printf("size = %d elapsed = %lg\n", size, toc-tic);
+    //    printf("estPi = %17.15lf\n", estpi);
+    printf("%d %lg \n", size, toc-tic);
   }
 
   MPI_Finalize();
