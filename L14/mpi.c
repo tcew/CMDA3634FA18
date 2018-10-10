@@ -33,8 +33,6 @@ int main(int argc, char **argv){
     }
   }
 
-  double toc = MPI_Wtime();
-
 
   {
     int messageLength = 1;
@@ -55,6 +53,8 @@ int main(int argc, char **argv){
       estpi = 4.*(messageIn[0]/(double)(size*Ntests)); // total number of tests = size * Ntests per rank
     }
   }
+
+  double toc = MPI_Wtime();
 
   
   if(rank==0){
