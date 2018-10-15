@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include "mpi.h"
 
+/* to compile: 
+   
+   mpicc -o mpiProbe mpiProbe.c
+
+   to execute with 10 nodes 
+   
+   mpiexec -n 10 ./mpiProbe
+
+*/
+
+
 // simple code to explore the use of dynamic message passing
 // sequence:
 // 1. use MPI_Isend to initiate a message send

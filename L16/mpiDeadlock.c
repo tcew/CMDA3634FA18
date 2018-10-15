@@ -3,6 +3,17 @@
 #include <stdlib.h>
 #include "mpi.h"
 
+/* to compile: 
+   
+   mpicc -o mpiDeadlock mpiDeadlock.c
+
+   to execute with 10 nodes and messages of length 20: 
+   
+   mpiexec -n 10 ./mpiDeadlock 20
+
+*/
+
+
 int main(int argc, char **argv){
   
   int rank, size;
