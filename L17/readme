@@ -1,0 +1,54 @@
+#1. Launch a terminal window in your virtualbox 
+
+#1.1 Secure shell to the newriver login node 
+ssh username@newriver1.arc.vt.edu
+
+#1.2 cd to your local clone of the course repo and pull new changes
+cd LOCAL_PATH_TO_COURSE_REPO
+git pull
+cd L17
+
+#1.3 Request an interactive job on a compute node (and wait)
+interact -lnodes=1:ppn=4 -l walltime=1:00:00 -ACMDA3634
+
+#1.4 Load the modules you will need to profile your MPI code
+module purge
+module load gcc mvapich2 jdk mpe2
+
+#1.5 Create a shell environment variable (this will be a string containing all the libraries needed)
+export LDFLAGS="-L$MPE_LIB -llmpe -lmpe -lm -mpilog -lpthread -lstdc++"
+
+#1.6 Compile your program with the "message passing environment compiler" mpecc instead of mpicc
+mpecc -o mpiProbe mpiProbe.c $LDFLAGS
+
+#1.7 Run your code as usual
+mpiexec -n 8 ./mpiProbe 100
+
+#1.8 You should see output like this:
+
+mpiexec -n 2 ./mpiProbe 100
+after wait: messageRecvBuffer[3] = 3
+after wait: messageRecvBuffer[3] = 3
+Writing logfile....
+Enabling the Default clock synchronization...
+Finished writing logfile ./mpiProbe.clog2.
+
+
+#2 Launch a new terminal window in your virtualbox so that we can visualize the timeline of your MPI program from the login node on newriver
+
+#2.1 secure shell into the newriver login node from your new terminal window (note we are using -X to allow X windows to tunnel through the ssh connection)
+ssh -X username@newriver1.arc.vt.edu
+
+#2.2 load modules 
+module purge
+module load gcc mvapich2 jdk mpe2
+
+#2.3 locate your run directory 
+cd LOCAL_PATH_TO_COURSE_REPO/L17
+
+#2.4 launch jumpshot profiler with output from the above run:
+jumpshot mpiProbe.clog2
+
+#2.5 if you see a window appear then success !
+
+#2.6 Explore the timeline of your program and take a screenshot. You will need to submit this with HW04 for credit.
