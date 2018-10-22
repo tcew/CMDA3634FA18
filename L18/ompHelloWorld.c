@@ -20,10 +20,9 @@ int main(int argc, char **argv){
     int rank = omp_get_thread_num();
     int size = omp_get_num_threads();
 
-    if((rank+1)%2==0)
-      printf("hello world from rank %d/%d\n",
-	     rank, size);
-
+    printf("hello world from rank %d/%d\n",
+	   rank, size);
+    
     // good parallel
     v[rank] = rank;
     
